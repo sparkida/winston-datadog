@@ -1,0 +1,20 @@
+{
+  "name": "winston-datadog",
+  "version": "1.0.0",
+  "description": "Winston Datadog transport",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sparkida/winston-datadog.git"
+  },
+  "keywords": [
+    "winston",
+    "datadog"
+  ],
+  "author": "Nicholas Riley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sparkida/winston-datadog/issues"
+  },
+  "homepage": "https://github.com/sparkida/winston-datadog#readme"
+}
