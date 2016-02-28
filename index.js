@@ -24,6 +24,7 @@ class Transport { //jshint ignore:line
     constructor(credentials) {
         var api = this;
         var paths = Transport.API_ENDPOINT.split('/').filter(Boolean);
+        api.name = 'Datadog';
         api.attachResults = false;
         api.requestOptions = {
             port: paths[0] === 'https:' ? 443 : 80,
@@ -48,7 +49,9 @@ class Transport { //jshint ignore:line
     receiveResults(logger) {
         var api = this;
         api.attachResults = true;
-        api.logger = logger;
+        if (logger) {
+            api.logger = logger;
+        }
     }
 
     /**
@@ -56,6 +59,14 @@ class Transport { //jshint ignore:line
      */
     stopResults() {
        this.attachResults = false;
+    }
+
+    /**
+     * Sets the winston logger to use for DatadogResult event
+     */
+    resetOptions() {
+       var api = this;
+       api.options = new api.Options();
     }
 
     /**
@@ -93,6 +104,9 @@ class Transport { //jshint ignore:line
         }
         if (!opts.text) {
             opts.text = text;
+        }
+        if (opts.text.length > 4000) {
+            opts.text = opts.text.substr(0, 4000);
         }
         req.write(JSON.stringify(opts));
         req.end();
