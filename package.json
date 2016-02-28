@@ -1,8 +1,11 @@
 {
   "name": "winston-datadog",
   "version": "1.0.0",
-  "description": "Winston Datadog transport",
+  "description": "Super light transport for logging Datadog events",
   "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec --recursive"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/sparkida/winston-datadog.git"
@@ -16,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/sparkida/winston-datadog/issues"
   },
-  "homepage": "https://github.com/sparkida/winston-datadog#readme"
+  "homepage": "https://github.com/sparkida/winston-datadog#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "dotenv": "^2.0.0",
+    "mocha": "^2.4.5",
+    "winston": "^2.2.0"
+  }
 }
