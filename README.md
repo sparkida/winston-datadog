@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/sparkida/winston-datadog.svg?branch=master)](https://travis-ci.org/sparkida/winston-datadog)
-[![Coverage Status](https://coveralls.io/repos/sparkida/winston-datadog/badge.svg?branch=master)](https://coveralls.io/r/sparkida/winston-datadog?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/sparkida/winston-datadog/badge.svg?branch=master)](https://coveralls.io/github/sparkida/winston-datadog?branch=master)
 
 Winston-Datadog
 ---------------
