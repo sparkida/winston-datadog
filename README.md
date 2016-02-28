@@ -18,8 +18,12 @@ Examples
 
 ###Basic setup
 ```javascript
-const ddTransport = require('winston-datadog');
 const winston = require('winston');
+const DatadogTransport = require('winston-datadog');
+const ddTransport = new DatadogTransport({
+    api_key: '',
+    app_key: '' //optional
+});
 const logger = new winston.Logger({
     transports: [
         ddTransport 
