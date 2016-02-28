@@ -63,8 +63,20 @@ describe('Transport', () => {
         });
         logger.log('info', text, data);
     });
+   
+    it ('should be able to send text data', (done) => {
+        var text = 'Something really awesome.';
+        logger.once('DatadogResult', (res) => {
+            assert.equal(res.body.status, 'ok');
+            assert(res.body.event);
+            assert.equal(res.body.event.text, text);
+            done();
+        });
+        logger.log('info', text);
+    });
     
-    it ('should disable the receiver', function (done) {
+    
+    it ('should disable the receiver', (done) => {
         logger.once('DatadogResult', (res) => {
             done(new Error('data receieved'));
         });

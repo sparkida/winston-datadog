@@ -91,6 +91,9 @@ class Transport { //jshint ignore:line
                 break;
             }
         }
+        if (!opts.text) {
+            opts.text = text;
+        }
         req.write(JSON.stringify(opts));
         req.end();
         opts.text = null;

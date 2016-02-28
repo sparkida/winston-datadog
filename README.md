@@ -59,5 +59,6 @@ Events
 
 Updates
 -------
+* Stable Release - @v1.0.1 21:58 PDT Feb 27th, 2016
 * Initial Release - 20:11 PDT Feb 27th, 2016
 * Check back notice - 08:09 PDT Feb 27th, 2016
