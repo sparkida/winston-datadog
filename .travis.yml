@@ -3,6 +3,8 @@ dist: trusty
 language: node_js
 script:
   - npm run cover
+before_install:
+  - touch test/.env
 after_success:
   - npm run report
 node_js:
