@@ -63,5 +63,15 @@ describe('Transport', () => {
         });
         logger.log('info', text, data);
     });
-   
+    
+    it ('should disable the receiver', function (done) {
+        logger.once('DatadogResult', (res) => {
+            done(new Error('data receieved'));
+        });
+        ddTransport.stopResults();
+        logger.on('logging', () => {
+            setTimeout(done, 1000);
+        });
+        logger.log('info', 'foo');
+    });
 });

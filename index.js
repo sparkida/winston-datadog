@@ -71,12 +71,13 @@ class Transport { //jshint ignore:line
             res.on('data', (buffer) => {
                 data += buffer;
             });
-            if (api.attachResults) {
-                res.on('end', () => {
+            res.on('end', () => {
+                if (api.attachResults) {
                     res.body = JSON.parse(data);
                     api.logger.emit.call(api.logger, 'DatadogResult', res);
-                });
-            }
+                }
+                callback();
+            });
         });
         var opts = api.options;
         opts.alert_type = loglevel;
