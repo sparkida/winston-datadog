@@ -16,7 +16,7 @@ npm install --save winston-datadog
 Examples
 --------
 
-###Basic setup
+### Basic setup
 ```javascript
 const winston = require('winston');
 const DatadogTransport = require('winston-datadog');
@@ -26,13 +26,13 @@ const ddTransport = new DatadogTransport({
 });
 const logger = new winston.Logger({
     transports: [
-        ddTransport 
+        ddTransport
     ]
 });
 
 ```
 
-###Receiving Results from Datadog
+### Receiving Results from Datadog
 ```javascript
 ddTransport.receiveResults(logger);
 logger.on('DatadogResult', (res) => {
@@ -46,7 +46,7 @@ logger.on('DatadogResult', (res) => {
 // ddTransport.receiveResults();
 ```
 
-###Event Options
+### Event Options
 ```javascript
 var ddTransport = new Datadog({ ... });
 //set the new title to use
@@ -61,7 +61,7 @@ ddTransport.resetOptions();
 ```
 
 
-###Permanently Override Default Options
+### Permanently Override Default Options
 In case you have multiple instances of the transport running and/or find you need to permanently change the default `DatadogTransport.Options`
 ```javascript
 var DatadogTransport = require('winston-datadog');
@@ -75,7 +75,7 @@ console.log(ddTransport.options.title);
 ```
 
 
-###Loglevels
+### Loglevels
 
 When Winston passes logs off to the Datadog transport, winston-datadog will map the log type (info, warn, error, etc...) to the corresponding `ddTransport.options.alert_type`. A check will be done to see if the log type exists in `ddTransport.loglevels`, if found it will override the default log type sent from winston. We have to do this, for isntance, in order to map Winston->warn() to DatadogTransport->warning();
 
