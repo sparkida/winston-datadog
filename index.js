@@ -29,9 +29,9 @@ class Transport { //jshint ignore:line
         api.requestOptions = {
             port: paths[0] === 'https:' ? 443 : 80,
             hostname: paths[1],
-            path: format('/%s/v%d/events?%s', 
-                    paths[2], 
-                    Transport.API_VERSION, 
+            path: format('/%s/v%d/events?%s',
+                    paths[2],
+                    Transport.API_VERSION,
                     qs.stringify(credentials)),
             method: 'POST',
             headers: {
@@ -92,6 +92,11 @@ class Transport { //jshint ignore:line
         });
         var opts = api.options;
         opts.alert_type = loglevel;
+
+        if (opts.useTextAsTitle) {
+          opts.title = text;
+        }
+
         //efficient way to check if object is empty or error
         if (data instanceof Error) {
             opts.text = text + (text.length ? ' | ' + data.stack : data.stack);
@@ -127,7 +132,7 @@ Transport.prototype.loglevels = {
     warn: 'warning'
 };
 
-/** 
+/**
  * Exposes endpoint options for Data-Dog
  * @const
  */
@@ -136,6 +141,7 @@ class TransportOptions {
         var opts = this;
         return {
             title: opts.title,
+            useTextAsTitle: opts.useTextAsTitle,
             priority: opts.priority,
             date_happened: opts.date_happened,
             host: opts.host,
