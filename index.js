@@ -26,6 +26,8 @@ class Transport { //jshint ignore:line
         var paths = Transport.API_ENDPOINT.split('/').filter(Boolean);
         api.name = 'Datadog';
         api.attachResults = false;
+        //set to true to force transport to use text in place of the title
+        api.useTextAsTitle = false;
         api.requestOptions = {
             port: paths[0] === 'https:' ? 443 : 80,
             hostname: paths[1],
@@ -93,7 +95,7 @@ class Transport { //jshint ignore:line
         var opts = api.options;
         opts.alert_type = loglevel;
 
-        if (opts.useTextAsTitle) {
+        if (api.useTextAsTitle) {
             opts.title = text;
         }
 
@@ -141,7 +143,6 @@ class TransportOptions {
         var opts = this;
         return {
             title: opts.title,
-            useTextAsTitle: opts.useTextAsTitle,
             priority: opts.priority,
             date_happened: opts.date_happened,
             host: opts.host,
@@ -153,7 +154,6 @@ class TransportOptions {
     }
 }
 TransportOptions.prototype.title = 'LOG';
-TransportOptions.prototype.useTextAsTitle = false;
 TransportOptions.prototype.priority = 'normal'; // or low
 TransportOptions.prototype.date_happened = null;
 TransportOptions.prototype.host = hostname;
