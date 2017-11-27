@@ -94,7 +94,7 @@ class Transport { //jshint ignore:line
         opts.alert_type = loglevel;
 
         if (opts.useTextAsTitle) {
-          opts.title = text;
+            opts.title = text;
         }
 
         //efficient way to check if object is empty or error
@@ -153,6 +153,7 @@ class TransportOptions {
     }
 }
 TransportOptions.prototype.title = 'LOG';
+TransportOptions.prototype.useTextAsTitle = false;
 TransportOptions.prototype.priority = 'normal'; // or low
 TransportOptions.prototype.date_happened = null;
 TransportOptions.prototype.host = hostname;

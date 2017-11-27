@@ -51,6 +51,8 @@ logger.on('DatadogResult', (res) => {
 var ddTransport = new Datadog({ ... });
 //set the new title to use
 ddTransport.options.title = 'My Custom Title';
+//or...optionally use text as title (default: false) 
+ddTransport.options.useTextAsTitle = true;
 //set the new tags to use
 ddTransport.options.tags = ['env:local', 'version:1', 'region:us-west-1'];
 
@@ -115,6 +117,7 @@ Options
 Each Datadog Transport instance will expose the following options via `ddTransport.options`
 
 - **title** ***[default=LOG]*** - The event title. Limited to 100 characters.
+- **useTextAsTitle** ***[default=false]*** - Set to force transport to use the text as the title, [see PR#2](https://github.com/sparkida/winston-datadog/pull/2)
 - **date_happened** ***[optional, default=now]*** - POSIX timestamp of the event.
 - **priority** ***[optional, default='normal']*** - The priority of the event ('normal' or 'low').
 - **host** ***[optional, default=os.hostname()]*** - Host name to associate with the event.
@@ -126,6 +129,7 @@ Each Datadog Transport instance will expose the following options via `ddTranspo
 
 Updates
 -------
+* Added new feature [useTextAsTitle](https://github.com/sparkida/winston-datadog/pull/2) / updated for NodeJS 9 - @v1.1.0 08:30 PST Nov 27th, 2017
 * Adds name to winston transports - @v1.0.2 09:03 PDT Feb 28th, 2016
 * Stable Release - @v1.0.1 21:58 PDT Feb 27th, 2016
 * Initial Release - 20:11 PDT Feb 27th, 2016

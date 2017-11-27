@@ -4,3 +4,4 @@ node_modules
 .npmignore
 test/.env
 coverage
+package-lock.json
