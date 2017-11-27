@@ -16,7 +16,7 @@ npm install --save winston-datadog
 Examples
 --------
 
-###Basic setup
+### Basic setup
 ```javascript
 const winston = require('winston');
 const DatadogTransport = require('winston-datadog');
@@ -26,13 +26,13 @@ const ddTransport = new DatadogTransport({
 });
 const logger = new winston.Logger({
     transports: [
-        ddTransport 
+        ddTransport
     ]
 });
 
 ```
 
-###Receiving Results from Datadog
+### Receiving Results from Datadog
 ```javascript
 ddTransport.receiveResults(logger);
 logger.on('DatadogResult', (res) => {
@@ -46,10 +46,12 @@ logger.on('DatadogResult', (res) => {
 // ddTransport.receiveResults();
 ```
 
-###Event Options
+### Event Options
 ```javascript
 var ddTransport = new Datadog({ ... });
-//set the new title to use
+//have the text be used in place of title (default: false)
+ddTransport.useTextAsTitle = true;
+//or...set the new title to use
 ddTransport.options.title = 'My Custom Title';
 //set the new tags to use
 ddTransport.options.tags = ['env:local', 'version:1', 'region:us-west-1'];
@@ -61,7 +63,7 @@ ddTransport.resetOptions();
 ```
 
 
-###Permanently Override Default Options
+### Permanently Override Default Options
 In case you have multiple instances of the transport running and/or find you need to permanently change the default `DatadogTransport.Options`
 ```javascript
 var DatadogTransport = require('winston-datadog');
@@ -75,7 +77,7 @@ console.log(ddTransport.options.title);
 ```
 
 
-###Loglevels
+### Loglevels
 
 When Winston passes logs off to the Datadog transport, winston-datadog will map the log type (info, warn, error, etc...) to the corresponding `ddTransport.options.alert_type`. A check will be done to see if the log type exists in `ddTransport.loglevels`, if found it will override the default log type sent from winston. We have to do this, for isntance, in order to map Winston->warn() to DatadogTransport->warning();
 
@@ -126,6 +128,7 @@ Each Datadog Transport instance will expose the following options via `ddTranspo
 
 Updates
 -------
+* Added new feature [useTextAsTitle](https://github.com/sparkida/winston-datadog/pull/2) / updated for NodeJS 9 - @v1.1.0 08:30 PST Nov 27th, 2017
 * Adds name to winston transports - @v1.0.2 09:03 PDT Feb 28th, 2016
 * Stable Release - @v1.0.1 21:58 PDT Feb 27th, 2016
 * Initial Release - 20:11 PDT Feb 27th, 2016

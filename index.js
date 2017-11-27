@@ -26,12 +26,14 @@ class Transport { //jshint ignore:line
         var paths = Transport.API_ENDPOINT.split('/').filter(Boolean);
         api.name = 'Datadog';
         api.attachResults = false;
+        //set to true to force transport to use text in place of the title
+        api.useTextAsTitle = false;
         api.requestOptions = {
             port: paths[0] === 'https:' ? 443 : 80,
             hostname: paths[1],
-            path: format('/%s/v%d/events?%s', 
-                    paths[2], 
-                    Transport.API_VERSION, 
+            path: format('/%s/v%d/events?%s',
+                    paths[2],
+                    Transport.API_VERSION,
                     qs.stringify(credentials)),
             method: 'POST',
             headers: {
@@ -92,6 +94,11 @@ class Transport { //jshint ignore:line
         });
         var opts = api.options;
         opts.alert_type = loglevel;
+
+        if (api.useTextAsTitle) {
+            opts.title = text;
+        }
+
         //efficient way to check if object is empty or error
         if (data instanceof Error) {
             opts.text = text + (text.length ? ' | ' + data.stack : data.stack);
@@ -127,7 +134,7 @@ Transport.prototype.loglevels = {
     warn: 'warning'
 };
 
-/** 
+/**
  * Exposes endpoint options for Data-Dog
  * @const
  */
