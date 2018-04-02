@@ -22,7 +22,11 @@ describe('Transport', () => {
         ddTransport.receiveResults(logger);
     });
 
-    it ('should load test/.env', () => {
+    afterEach(() => {
+        delete ddTransport.options.aggregation_key;
+    });
+
+    it('should load test/.env', () => {
         assert(!!process.env.DD_API_KEY);
         assert(!!process.env.DD_APPLICATION_KEY);
     });
@@ -66,7 +70,7 @@ describe('Transport', () => {
    
     it ('should be able to send text data', (done) => {
         var text = 'Something really awesome.';
-        logger.once('DatadogResult', (res) => {
+        logger.once('DatadogResult', res => {
             assert.equal(res.body.status, 'ok');
             assert(res.body.event);
             assert.equal(res.body.event.text, text);
@@ -75,9 +79,36 @@ describe('Transport', () => {
         logger.log('info', text);
     });
     
+  it('should be able to set aggregation_key on log', done => {
+    var text = 'Something aggregated.';
+    logger.once('DatadogResult', res => {
+      assert.equal(res.body.status, 'ok');
+      assert(res.body.event);
+      assert.equal(res.body.event.text, text);
+      done();
+    });
+    logger.log('info', text, { aggregation_key: '123' });
+  });
     
-    it ('should disable the receiver', (done) => {
-        logger.once('DatadogResult', (res) => {
+  it('should be able to override transport aggregation_key on log', done => {
+    var text = 'Something aggregated, without changing the default key.';
+    var transportAggregationKey = 'tag';
+    logger.once('DatadogResult', res => {
+      assert.deepStrictEqual(
+        ddTransport.options.aggregation_key,
+        transportAggregationKey
+      );
+      assert.equal(res.body.status, 'ok');
+      assert(res.body.event);
+      assert.equal(res.body.event.text, text);
+      done();
+    });
+    ddTransport.options.aggregation_key = transportAggregationKey;
+    logger.log('info', text, { aggregation_key: '123' });
+  });
+    
+  it('should disable the receiver', done => {
+    logger.once('DatadogResult', res => {
             done(new Error('data receieved'));
         });
         ddTransport.stopResults();

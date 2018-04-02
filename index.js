@@ -99,13 +99,18 @@ class Transport { //jshint ignore:line
             opts.title = text;
         }
 
+        var aggregation_key;
+        if (data && data.aggregation_key) aggregation_key = data.aggregation_key;
+
         //efficient way to check if object is empty or error
         if (data instanceof Error) {
             opts.text = text + (text.length ? ' | ' + data.stack : data.stack);
         } else {
             var prop;
-            for (prop in data) {
-                opts.text = text + (text.length ? ' | ' + JSON.stringify(data) : JSON.stringify(data));
+            var dataCopy = Object.assign({}, data);
+            delete dataCopy.aggregation_key;
+            for (prop in dataCopy) {
+                opts.text = text + (text.length ? ' | ' + JSON.stringify(dataCopy) : JSON.stringify(dataCopy));
                 break;
             }
         }
@@ -115,7 +120,8 @@ class Transport { //jshint ignore:line
         if (opts.text.length > 4000) {
             opts.text = opts.text.substr(0, 4000);
         }
-        req.write(JSON.stringify(opts));
+        // override aggregation_key with version passed as param (if set)
+        req.write(JSON.stringify(Object.assign({ aggregation_key: aggregation_key }, opts)));
         req.end();
         opts.text = null;
         delete opts.text;

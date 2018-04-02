@@ -125,6 +125,37 @@ Each Datadog Transport instance will expose the following options via `ddTranspo
 - **aggregation_key** ***[optional, default=None]*** - An arbitrary string to use for aggregation, max length of 100 characters.
 - **source_type_name** ***[optional, default=None]*** - The type of event being posted. Options: nagios, hudson, jenkins, user, my apps, feed, chef, puppet, git, bitbucket, fabric, capistrano
 
+Setting aggregation_key for a specific event
+--------------------------------------------
+
+Setting the aggregation key on the transport option should be sufficient for most situations, but there may be cases where you need to set the aggregation key for a specific log.
+To do this you need to include the `aggregation_key` with the `data` passed to the `logger.log` function.
+
+For example:
+```javascript
+// event with text
+logger.log('info', 'event text', { aggregation_key: 'key' });
+
+// event with object
+var data = { foo: 'bar', bar: 'baz' };
+data.aggregation_key = 'key';
+logger.log('info', 'event text', data);
+
+// event with error
+var error = new Error();
+error.aggregation_key = 'key';
+logger.log('info', 'event text', error);
+```
+
+The `aggregation_key` is excluded from the `data` parameter that is passed to Datadog. This means that the `aggregation_key` will not be printed in the Datadog event logs.
+
+Setting the `aggregation_key` via the `log` function will override the `aggregration_key` set via the transport options for that specific event log.
+
+Thus the order in which the `aggregation_key` is applied is:
+
+1. `data.aggregation_key`
+1. `ddTransport.options.aggregation_key`
+1. none if both of the aforementioned options are undefined
 
 Updates
 -------
